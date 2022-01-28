@@ -2,7 +2,7 @@
 # Team 2: 
 # 2.2 Engineering Design
 
-import numpy as np
+import math
 import cmath
 
 # Design a power factor correction function that calculates required reactive power
@@ -20,7 +20,7 @@ R0 = 600    # ohms
 C = [-171,-200,-240,-300,-400,-600,-1200]   # j ohms
 Z = []
 
-# Find total impedance, Z: R0||C = 1 / (1/R0 + 1/C)
+# Find total impedance, Z: R0||C = 1 / (1/R0 + 1/jC)
 for c in C:
     Z.append(1/(1/R0+1/complex(0,c)))
 
@@ -37,7 +37,7 @@ print("\npolar Z:")
 for z in Z:
     zmag = abs(z)
     #zang = cmath.phase(z)      # radians
-    zang = np.degrees(cmath.phase(z))
+    zang = math.degrees(cmath.phase(z))
     print(f"{zmag:.2f} ohms, angle {zang:.2f} degrees")
 
 # calculate current
@@ -49,7 +49,7 @@ for z in Z:
 print("\npolar current:")
 for i in I1:
     imag = abs(i)
-    iang = np.degrees(cmath.phase(i))
+    iang = math.degrees(cmath.phase(i))
     print(f"{imag:.2f} A, angle {iang:.2f} degrees")
 
 
@@ -62,7 +62,7 @@ Z0 = complex(R0,L)
 C = [-171,-200,-240,-300,-400,-600,-1200]   # j ohms
 Z = []
 
-# Find total impedance, Z: R0||C = 1 / (1/R0 + 1/C)
+# Find total impedance, Z: Z0||C = 1 / (1/Z0 + 1/jC)
 for c in C:
     Z.append(1/(1/Z0+1/complex(0,c)))
 
@@ -79,7 +79,7 @@ print("\npolar Z:")
 for z in Z:
     zmag = abs(z)
     #zang = cmath.phase(z)      # radians
-    zang = np.degrees(cmath.phase(z))
+    zang = math.degrees(cmath.phase(z))
     print(f"{zmag:.2f} ohms, angle {zang:.2f} degrees")
 
 # calculate current
@@ -90,6 +90,6 @@ for z in Z:
 print("\npolar current:")
 for i in I2:
     imag = abs(i)
-    iang = np.degrees(cmath.phase(i))
+    iang = math.degrees(cmath.phase(i))
     print(f"{imag:.2f} A, angle {iang:.2f} degrees")
 
