@@ -20,6 +20,7 @@ Q = np.linspace(0,10,N)     # N evenly spaced values btwn 0 and 10
 qc_step = .25               # discrete values of Qc with this step size
 Qc = np.arange(0,-N,-qc_step)# N possible values of Qc btwn 0 and -N*qc_step
 count = 0
+q_add = 0.
 
 def pf_correction(p,q):
     global count
@@ -32,6 +33,8 @@ def pf_correction(p,q):
         count = count + 1
         print(f"P = {p:.2}, Q = {q:.2}")
         print(f"S_mag = {S_mag:.2}     \t pf = {pf:.2}")
+
+        return 0.
 
     else:
         count = count + 1
@@ -48,10 +51,11 @@ def pf_correction(p,q):
                 #print(f"|S| = {abs(S_mag):.1}")
                 print(f"PF = {pf:.2}")
 
-                break
+                return qc
 
 for p in P:
     for q in Q:
-        pf_correction(p,q)
+        q_add = pf_correction(p,q)
+        print(f"Qc to add = {q_add:.3}")
 
 print(f"iteration count = {count}")
