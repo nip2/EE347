@@ -69,7 +69,6 @@ for z in Z:
 print("\npolar Z:")
 for z in Z:
     zmag = abs(z)
-    #zang = cmath.phase(z)      # radians
     zang = math.degrees(cmath.phase(z))
     print(f"{zmag:.2f} ohms, angle {zang:.2f} degrees")
 
