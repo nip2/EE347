@@ -44,6 +44,17 @@ for i in I1:
     iang = math.degrees(cmath.phase(i))
     print(f"{imag:.2f} A, angle {iang:.2f} degrees")
 
+# calculate apparent power
+S1 = []
+for i in I1:
+    S1.append(V*i)
+
+print("\nApparent power:")
+for s in S1:
+    smag = abs(s)
+    sang = math.degrees(cmath.phase(s))
+    print(f"{smag:.2f} VA, angle {sang:.2f} degrees")
+
 
 # Case 2
 print("\nCase 2")
@@ -82,3 +93,14 @@ for i in I2:
     imag = abs(i)
     iang = math.degrees(cmath.phase(i))
     print(f"{imag:.2f} A, angle {iang:.2f} degrees")
+
+# calculate apparent power
+S2 = []
+for i in I2:
+    S2.append(V*i)
+
+print("\nApparent power:")
+for s in S2:
+    smag = abs(s)
+    sang = math.degrees(cmath.phase(s))
+    print(f"{smag:.2f} VA, angle {sang:.2f} degrees")

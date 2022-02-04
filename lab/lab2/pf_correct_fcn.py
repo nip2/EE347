@@ -5,15 +5,16 @@
 import math
 import cmath
 import numpy as np
+import matplotlib.pyplot as plt
 
-# Design a power factor correction function that calculates required reactive power
+# A power factor correction function that calculates required reactive power
 # for a given load according to the following specifications:
 # S_load = P_l + j*Q_l = [1 + j0:10 + j10] MVA exclusive of |S_load| > 10 MVA
 # function shall return capacitance Q_c required to maintain
 # 0.95 lagging <= PF <= 1.0 for a given S_load
 # Q_c shall be limited to discrete values in increments of 0.25 MVAr
 
-N = 100                      # NxN possible combinations
+N = 100                     # NxN possible combinations
 pf_cutoff = 0.95            # pf should be at or above this value
 P = np.linspace(1,10,N)     # N evenly spaced values btwn 1 and 10
 Q = np.linspace(0,10,N)     # N evenly spaced values btwn 0 and 10
@@ -35,8 +36,11 @@ def pf_correction(p,q):
     # q_target is the value of q that gives pf = 0.95 for the given value of p
     q_target = p*math.tan(math.acos(pf_cutoff))
 
+    if S_mag == 0.:
+        return 0.
+
     # if the given pf is already above 0.95, then qc = 0
-    if pf >= pf_cutoff:
+    elif pf >= pf_cutoff:
         # count is for testing
         count = count + 1
         # output the values for confirmation
@@ -59,7 +63,7 @@ def pf_correction(p,q):
                 pf = p/S_mag
                         
                 print("\npf correction")
-                print(f"started with S = [{p:.3} + j{q:.3}]")
+                print(f"started with S = [{p:.3} + j{q:.3}] MVA")
                 print(f"The following values yield a pf >= {pf_cutoff:.2}:")
                 print(f"S = [{p:.3} + j{q_nu:.3}] MVA")
                 print(f"PF = {pf:.2}")
@@ -72,7 +76,25 @@ def pf_correction(p,q):
 for p in P:
     for q in Q:
         q_add = pf_correction(p,q)
-        print(f"Qc to add = {q_add:.3}")
+        print(f"Qc to add = {q_add:.3} MVAr")
 
 # verify that we tested NxN values
 print(f"iteration count = {count}")
+
+
+# generate plot of qc as a function of p and q
+N = 30
+x = np.linspace(1, 10, 30)
+y = np.linspace(1, 10, 30)
+
+X, Y = np.meshgrid(x, y)
+vfunc = np.vectorize(pf_correction)
+Z = vfunc(X,Y)
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+ax.contour3D(X, Y, Z, 50, cmap='binary')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+plt.show()
