@@ -19,17 +19,15 @@ pf_cutoff = 0.95            # pf should be at or above this value
 P = np.linspace(1,10,N)     # N evenly spaced values btwn 1 and 10
 Q = np.linspace(0,10,N)     # N evenly spaced values btwn 0 and 10
 qc_step = .25               # discrete values of Qc with this step size
-Qc = np.arange(0,-N,-qc_step)# N possible values of Qc btwn 0 and -N*qc_step
-count = 0                   # count is for testing that we iterate through NxN combinations
+Qc = np.arange(0,-N,-qc_step)# N possible values of Qc btwn [0, -N*qc_step]
 q_add = 0.                  # initiate variable to store correcting qc in
 
 # function definition
 # takes a given p and q and returns a corresponding correcting capacitance, qc
 def pf_correction(p,q):
-    # count value is for testing purposes
-    global count
 
-    S_mag = math.sqrt(p**2+q**2)      # |S| = sqrt(p^2 + q^2)
+    S = complex(p,q)    # S = p + jq
+    S_mag = abs(S)      # |S| = sqrt(p^2 + q^2)
     pf = p/S_mag        # uncorrected pf
 
     # q_target is the value of q that gives pf = 0.95 for the given value of p
@@ -37,8 +35,6 @@ def pf_correction(p,q):
 
     # if the given pf is already above 0.95, then qc = 0
     if pf >= pf_cutoff:
-        # count is for testing
-        count = count + 1
         # output the values for confirmation
         print(f"P = {p:.3}, Q = {q:.3}")
         print(f"S_mag = {S_mag:.2}     \t pf = {pf:.2}")
@@ -48,9 +44,6 @@ def pf_correction(p,q):
 
     # if pf is not >= 0.95, then it needs correction
     else:
-        # count is for testing
-        count = count + 1
-
         # iterate through possible qc values (increment 0.25)
         for qc in Qc:
             q_nu = q + qc
@@ -74,5 +67,4 @@ for p in P:
         q_add = pf_correction(p,q)
         print(f"Qc to add = {q_add:.3} MVAr")
 
-# verify that we tested NxN values
-print(f"iteration count = {count}")
+
