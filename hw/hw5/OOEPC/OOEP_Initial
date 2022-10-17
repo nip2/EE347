@@ -1,0 +1,23 @@
+% File describing a possible future condition of the
+% Ozzie Outback Electric Power system.
+%
+% System data has the form:
+%SYSTEM    name       baseMVA    Voltage Tolerance
+SYSTEM  OOEP_Future1    100            0.05
+%
+% Bus data has the form:
+%BUS name       type  volts  Pgen   Qgen   Pload  Qload  Qcap
+BUS Bunya        SL   1.00      0      0      0      0      0
+BUS Mulga        PV   1.00    200      0      0      0      0
+BUS Mallee       PQ   1.00      0      0    100     75      0
+BUS Myall        PQ   1.00      0      0    100     70      0
+BUS Satinay      PQ   1.00      0      0    120    100      0
+%
+% Transmission line data has the form:
+%LINE    from        to      Rse    Xse    Gsh    Bsh    Rating(MVA)
+LINE   Bunya     Mulga      0.001  0.051  0.000  0.000    100
+LINE   Mulga     Satinay    0.007  0.035  0.000  0.000    250
+LINE   Bunya     Myall      0.007  0.035  0.000  0.000    200
+LINE   Myall     Satinay    0.007  0.035  0.000  0.000    100
+LINE   Myall     Mallee     0.011  0.051  0.000  0.000     60
+LINE   Mallee    Satinay    0.011  0.051  0.000  0.000     60

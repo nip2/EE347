@@ -1,0 +1,23 @@
+function takes sLoad with datatype complex float
+returns vr float as a percentage (voltage regulation)
+
+voltReg(sLoad):
+    input range 0 <= |sLoad| <= 1.8*Srated
+                -90 <= theta <= 90 degrees
+    return vr
+
+eta(sLoad):
+    same input range
+    return efficiency (as percentage)
+
+overcurrent(|iLine|,c1):
+    iLine is a function of sLoad
+    c1 is per-unit overcurrent factor -> c1(|iLine|,t)
+    return overcurrent flag if |iLine| >= c1*Irated
+
+uovoltage(|Vp|,Cv):
+    Vp primary voltage
+    Cv = [C_Vu,C_Vo] per-unit under/over-voltage factors
+    return undervoltage flag if |Vp| <= C_Vu*Vrated
+    return overvoltage flag if |Vp| >= C_Vo*Vrated
+
